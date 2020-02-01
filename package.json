@@ -1,0 +1,21 @@
+{
+  "name": "battlescribe-to-json",
+  "version": "0.0.0",
+  "description": "battlescribe to json",
+  "main": "index.js",
+  "scripts": {
+    "commit": "npx git-cz",
+    "start": "npx ts-node index.ts",
+    "build": "npx tsc",
+    "test": "exit 0"
+  },
+  "repository": "https://cemderin@github.com/cemderin/battlescribe-to-json.git",
+  "author": "cemyderin@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "git-cz": "^4.2.0",
+    "standard-version": "^7.1.0",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}
