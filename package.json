@@ -2,7 +2,8 @@
   "name": "@cemderin/battlescribe-to-json",
   "version": "0.0.0",
   "description": "battlescribe to json",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.dt.ts",
   "scripts": {
     "test": "npx jest",
     "test:watch": "npx jest --watch",
