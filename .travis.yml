@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+- 10
+before_deploy: yarn pre-build && yarn build
+deploy:
+  edge: true
+  provider: npm
+  skip_cleanup: true
+  email: cemyderin@gmail.com
+  api_key:
+    secure: xzlXCYPG3XwUOckpwKPUlgylOWr8kc8M7EgSeXdFaJWxD0KHZYhp/bE5tJYwI8raBEvovU5XA05BlNHNkw2RAyt5ZT30TAsO+qEi588JxtKQQi79R6iJ12YmKPlcs8cW5nYW4AL8h9ZV/rmVKvgDU9MVtDBgQyO1Or6O6sw94NaZECbcMtdS6YmTpwwUPiehRbLOZfDW/nmoyGf685q5t1pviEh0C+NejzJmxznRqseYi0XW6xeiWFLaRtOELrjtpTGwAbQbPs4jXrP+4lg9FcTHIZQTJ1/HGa7JKEEWTOQYSOgKfyKZ5HHlbpZY1a+M+JejjXBK+UHG7JsAkF9JvuTTJrfU4Iwb1gpgyn/oYIm9veylMlx0BcUp5iiCrzQr86WLB9HE08NZ7Q1jAGsWMTdceIjIljoLaIOikYea8PK/ztceJxJBhaiQp5YPZRNYEujNwOLjuerFN22+dqc6yfmKTcIo5Ld5Iub83u/On7haipuz6Vp4QDCGm+SATFFoP3KO/hshVYahbdRJrG/3zxl0au64KezcEWyqrOUhzyzOUMbinFcHzqNyUjaFZbhcyDqHU+X9vFQkkOJqi8YEXj0B1UlW4gMG/P82DTQZoANL1SYhKL2mTAeHD3HB//ojUPmd0VmqW4GsZx/LHNMxd6V50Ph0l+6Q+nMExplfbmY=
+  on:
+    repo: cemderin/battlescribe-to-json
+    branch: master
