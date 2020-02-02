@@ -75,7 +75,7 @@ class BSFile {
                     }
                 }
             }
-            console.log(model);
+            
             return model;
         });
     }
