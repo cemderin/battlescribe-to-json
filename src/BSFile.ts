@@ -1,4 +1,4 @@
-import parser from 'xml2json';
+import parser from 'xml2js';
 import fs from 'fs';
 
 import { Model } from '@cemderin/battle-calculator';
@@ -15,42 +15,46 @@ class BSFile {
         return new Promise((resolve: any, reject: any) => {
             fs.readFile(this.path, (err: any, data: any) => {
                 if (err) reject(err);
-                this.content = JSON.parse(parser.toJson(data));
-                resolve(this.content);
+
+                return parser.parseString(data, (err: any, result: any) => {
+                    if(err) reject(err);
+                    this.content = result;
+                    resolve(this.content);
+                })
             });
         })
     }
 
     extractModels(): Array<Model> {
-        return this.content?.catalogue?.sharedSelectionEntries?.selectionEntry?.filter((item: { type: string; }) => {
-            if (item.type === 'model') return true;
+        return this.content?.catalogue?.sharedSelectionEntries[0].selectionEntry?.filter((item: any) => {
+            if (item['$'].type === 'model') return true;
         }).map((item: any) => {
-            let profiles = item.profiles.profile;
-            if (!Array.isArray(item.profiles.profile)) profiles = [item.profiles.profile];
+            let profiles = item.profiles[0].profile;
+            if (!Array.isArray(item.profiles[0].profile)) profiles = [item.profiles[0].profile];
 
             let model = new Model();
-            model.name = item.name;
+            model.name = item['$'].name;
 
             for (let profile of profiles) {
-                if (profile.typeName === 'Model') {
-                    for (let characteristic of profile.characteristics?.characteristic) {
-                        switch (characteristic.name) {
+                if (profile['$'].typeName === 'Model') {
+                    for (let characteristic of profile.characteristics[0].characteristic) {
+                        switch (characteristic['$'].name) {
                             case 'M':
                                 break;
 
                             case 'WS':
-                                model.weaponskill = parseInt(characteristic['$t']);
+                                model.weaponskill = parseInt(characteristic['_']);
                                 break;
 
                             case 'BS':
                                 break;
 
                             case 'S':
-                                model.strength = parseInt(characteristic['$t']);
+                                model.strength = parseInt(characteristic['_']);
                                 break;
 
                             case 'T':
-                                model.toughness = parseInt(characteristic['$t']);
+                                model.toughness = parseInt(characteristic['_']);
                                 break;
 
                             case 'W':
@@ -63,7 +67,7 @@ class BSFile {
                                 break;
 
                             case 'Sv':
-                                model.save = parseInt(characteristic['$t']);
+                                model.save = parseInt(characteristic['_']);
                                 break;
 
                             case 'Max':
@@ -75,7 +79,7 @@ class BSFile {
                     }
                 }
             }
-            
+
             return model;
         });
     }

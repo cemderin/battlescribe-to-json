@@ -1,5 +1,5 @@
 import BSFile from "./BSFile";
-import parser from 'xml2json';
+import parser from 'xml2js';
 
 class BSString extends BSFile {
     data: string; 
@@ -11,8 +11,12 @@ class BSString extends BSFile {
 
     load() {
         return new Promise((resolve: any, reject: any) => {
-            this.content = JSON.parse(parser.toJson(this.data));
-            resolve(this.content);
+            return parser.parseString(this.data, (err: any, result: any) => {
+                if(err) reject(err);
+                
+                this.content = result;
+                resolve(this.content);
+            })
         });
     }
 }
